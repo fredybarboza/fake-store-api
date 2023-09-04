@@ -17,3 +17,12 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::post('login', [LoginController::class, 'login']);
+
+Route::middleware('auth:api')->group(function()
+{
+    Route::post('refresh', [LoginController::class, 'refresh']);
+});
+
+Route::get('/unauthorized', function (){
+    return response()->json(["status"=>"error","message"=>"unauthorized"])->setStatusCode(401);
+})->name("unauthorized");

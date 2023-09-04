@@ -11,8 +11,8 @@ use Illuminate\Http\Request;
 class LoginController extends Controller
 {
     
-    public function login(LoginRequest $request): JsonResponse{
-
+    public function login(LoginRequest $request): JsonResponse
+    {
         $credentials = $request->only('email', 'password');
 
         $token = Auth::attempt($credentials);
@@ -27,6 +27,12 @@ class LoginController extends Controller
         return response()->json([
             'access_token' => $token
         ], 200);
+    }
 
+    public function refresh()
+    {
+        return response()->json([
+            'new_access_token' => Auth::refresh()
+        ], 200);
     }
 }
