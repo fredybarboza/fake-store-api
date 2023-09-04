@@ -6,6 +6,7 @@ use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\Response;
 use Throwable;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 
 class Handler extends ExceptionHandler
@@ -37,6 +38,13 @@ class Handler extends ExceptionHandler
             return response()->json([
                 'message' => 'Method not allowed for this route',
             ], Response::HTTP_METHOD_NOT_ALLOWED);
+        }
+
+        if ($exception instanceof NotFoundHttpException) {
+            return response()->json([
+                'error' => 'Not Found',
+                'message' => 'Cannot ' . $request->getMethod() . " " . "/" . $request->path(),
+            ], 404);
         }
 
         return parent::render($request, $exception);

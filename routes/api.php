@@ -24,5 +24,6 @@ Route::middleware('auth:api')->group(function()
 });
 
 Route::get('/unauthorized', function (){
-    return response()->json(["status"=>"error","message"=>"unauthorized"])->setStatusCode(401);
+    return response()->json(["status"=>"error","message"=>"Unauthorized"])->setStatusCode(401);
 })->name("unauthorized");
+
