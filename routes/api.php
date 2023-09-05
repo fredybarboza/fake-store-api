@@ -27,3 +27,13 @@ Route::get('/unauthorized', function (){
     return response()->json(["status"=>"error","message"=>"Unauthorized"])->setStatusCode(401);
 })->name("unauthorized");
 
+Route::get('/images/{filename}', function ($filename) {
+    $path = public_path('uploads/' . $filename);
+
+    if (file_exists($path)) {
+        return response()->file($path);
+    }
+
+    abort(404);
+})->name('image.show');
+
