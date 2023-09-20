@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\Auth\LoginController;
+use App\Http\Controllers\Api\ProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -27,7 +28,13 @@ Route::get('/unauthorized', function (){
     return response()->json(["status"=>"error","message"=>"Unauthorized"])->setStatusCode(401);
 })->name("unauthorized");
 
-Route::get('/images/{filename}', function ($filename) {
+Route::post('/products', [ProductController::class, 'store']);
+
+Route::post('/products/store-with-image-files', [ProductController::class, 'storeWithImageFiles']);
+
+
+
+/*Route::get('/images/{filename}', function ($filename) {
     $path = public_path('uploads/' . $filename);
 
     if (file_exists($path)) {
@@ -35,5 +42,5 @@ Route::get('/images/{filename}', function ($filename) {
     }
 
     abort(404);
-})->name('image.show');
+})->name('image.show');*/
 

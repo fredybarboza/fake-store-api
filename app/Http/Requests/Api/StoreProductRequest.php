@@ -2,13 +2,13 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Http\JsonResponse;
 
-class LoginRequest extends FormRequest
+class StoreProductRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,8 +26,11 @@ class LoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => 'required|email',
-            'password' => 'required|string'
+            'name' => 'required|string|max:255',
+            'images' => 'required|array',
+            'images.*' => 'image|mimes:jpeg,png,jpg',
+            'category_id' => 'required|exists:categories,id',
+            'price' => 'required|numeric',
         ];
     }
 
@@ -37,9 +40,9 @@ class LoginRequest extends FormRequest
 
        throw new HttpResponseException(
         response()->json([
-            'status' => 'fail',
             'errors' => $errors,
         ], JsonResponse::HTTP_UNPROCESSABLE_ENTITY)
     );
     }
+
 }

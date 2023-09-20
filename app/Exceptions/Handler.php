@@ -7,6 +7,7 @@ use Illuminate\Http\Response;
 use Throwable;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Illuminate\Database\QueryException;
 
 
 class Handler extends ExceptionHandler
@@ -45,6 +46,10 @@ class Handler extends ExceptionHandler
                 'error' => 'Not Found',
                 'message' => 'Cannot ' . $request->getMethod() . " " . "/" . $request->path(),
             ], 404);
+        }
+
+        if ($exception instanceof QueryException) {
+            return response()->json(['error' => 'An error occurred in the database'], 500);
         }
 
         return parent::render($request, $exception);
