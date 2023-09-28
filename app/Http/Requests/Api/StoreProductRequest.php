@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Api;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
@@ -18,6 +18,14 @@ class StoreProductRequest extends FormRequest
         return true;
     }
 
+    public function attributes(): array
+    {
+        return [
+            'imageFiles.*' => 'imageFiles[:index]',
+            'imageUrls.*' => 'imageUrls[:index]'
+        ];
+    }
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -27,10 +35,13 @@ class StoreProductRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
-            'images' => 'required|array',
-            'images.*' => 'image|mimes:jpeg,png,jpg',
+            'imageFiles' => 'array',
+            'imageFiles.*' => 'image|mimes:jpeg,png,jpg',
+            'imageUrls' => 'array',
+            'imageUrls.*' => 'required|url',
             'category_id' => 'required|exists:categories,id',
             'price' => 'required|numeric',
+            'description' => 'string'
         ];
     }
 
@@ -42,7 +53,8 @@ class StoreProductRequest extends FormRequest
         response()->json([
             'errors' => $errors,
         ], JsonResponse::HTTP_UNPROCESSABLE_ENTITY)
-    );
+        );
+
     }
 
 }

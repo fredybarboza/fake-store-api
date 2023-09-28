@@ -28,31 +28,22 @@ class Handler extends ExceptionHandler
      */
     public function register(): void
     {
-        $this->reportable(function (Throwable $e) {
-            
-        });
-    }
+        $this->renderable(function (Throwable $exception) {
 
-    public function render($request, Throwable $exception)
-    {
-        if ($exception instanceof MethodNotAllowedHttpException) {
+            if ($exception instanceof NotFoundHttpException) {
+                return response()->json([
+                    'message' => 'Not Found',
+                ], 404);
+            }
+
+            if ($exception instanceof MethodNotAllowedHttpException) {
             return response()->json([
                 'message' => 'Method not allowed for this route',
-            ], Response::HTTP_METHOD_NOT_ALLOWED);
+            ], 405);
         }
 
-        if ($exception instanceof NotFoundHttpException) {
-            return response()->json([
-                'error' => 'Not Found',
-                'message' => 'Cannot ' . $request->getMethod() . " " . "/" . $request->path(),
-            ], 404);
-        }
-
-        if ($exception instanceof QueryException) {
-            return response()->json(['error' => 'An error occurred in the database'], 500);
-        }
-
-        return parent::render($request, $exception);
+           return response()->json(['message' => 'An error accurred'], 500); 
+        });
     }
     
 }

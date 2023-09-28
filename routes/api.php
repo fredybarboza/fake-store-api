@@ -30,17 +30,5 @@ Route::get('/unauthorized', function (){
 
 Route::post('/products', [ProductController::class, 'store']);
 
-Route::post('/products/store-with-image-files', [ProductController::class, 'storeWithImageFiles']);
 
-
-
-/*Route::get('/images/{filename}', function ($filename) {
-    $path = public_path('uploads/' . $filename);
-
-    if (file_exists($path)) {
-        return response()->file($path);
-    }
-
-    abort(404);
-})->name('image.show');*/
 
