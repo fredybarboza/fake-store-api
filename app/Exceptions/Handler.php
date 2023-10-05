@@ -42,7 +42,7 @@ class Handler extends ExceptionHandler
             ], 405);
         }
 
-           return response()->json(['message' => 'An error accurred'], 500); 
+           //return response()->json(['message' => 'An error accurred'], 500); 
         });
     }
     
