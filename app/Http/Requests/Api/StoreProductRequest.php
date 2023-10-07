@@ -35,9 +35,9 @@ class StoreProductRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
-            'imageFiles' => 'array',
+            'imageFiles' => 'array|max:4',
             'imageFiles.*' => 'image|mimes:jpeg,png,jpg',
-            'imageUrls' => 'array',
+            'imageUrls' => 'array|max:4',
             'imageUrls.*' => 'required|url',
             'category_id' => 'required|exists:categories,id',
             'price' => 'required|numeric',

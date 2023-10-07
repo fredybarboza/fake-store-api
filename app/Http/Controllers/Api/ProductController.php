@@ -12,15 +12,18 @@ use App\Http\Resources\ProductPaginatedCollection;
 use App\Http\Resources\ProductResource;
 use App\Http\Resources\StoreProductResource;
 use App\Models\Category;
+use App\Models\Image;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Product;
+use Faker\Core\Number;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Validator;
 
 use function PHPUnit\Framework\isEmpty;
 use function PHPUnit\Framework\isNull;
 use Illuminate\Support\Facades\DB;
+use Ramsey\Uuid\Type\Integer;
 
 class ProductController extends Controller
 {
@@ -95,10 +98,14 @@ class ProductController extends Controller
 
             $imageUrl = asset('storage/' . $imagePath);
 
-            $product->images()->create(['image_url' => $imageUrl]);
+            //$product->images()->create(['image_url' => $imageUrl]);
 
             $uploadedImageUrls[] = $imageUrl;
+
+            $imageData[] = ['image_url' => $imageUrl, 'product_id' => $product->id];
         }
+
+        Image::insert($imageData);
 
         return $uploadedImageUrls;
 
@@ -110,10 +117,14 @@ class ProductController extends Controller
 
         foreach($imageUrls as $imageUrl)
         {
-            $product->images()->create(['image_url' => $imageUrl]);
+            //$product->images()->create(['image_url' => $imageUrl]);
 
             $urls[] = $imageUrl;
+
+            $imageData[] = ['image_url' => $imageUrl, 'product_id' => $product->id];
         }
+
+        Image::insert($imageData);
 
         return $urls;
     }

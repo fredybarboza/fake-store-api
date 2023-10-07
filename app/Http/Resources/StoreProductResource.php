@@ -20,7 +20,7 @@ class StoreProductResource extends JsonResource
             'name' => $this->name,
             'price' => $this->price,
             'description' => $this->when($this->description !== null, $this->description),
-            'category' => new CategoryResource($this->category),
+            'category' => $this->category()->select(['id', 'name'])->first(),
             'images' => $this->when($this->imageUrls !== [], $this->imageUrls)
         ];
     }
