@@ -17,6 +17,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Product;
 use Faker\Core\Number;
+use Illuminate\Database\Eloquent\Casts\Json;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Validator;
 
