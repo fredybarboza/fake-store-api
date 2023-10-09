@@ -19,6 +19,7 @@ use App\Models\Product;
 use Faker\Core\Number;
 use Illuminate\Database\Eloquent\Casts\Json;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Validator;
 
 use function PHPUnit\Framework\isEmpty;
@@ -132,7 +133,18 @@ class ProductController extends Controller
 
     public function show(string $id)
     {
-        //
+
+        if (!is_numeric($id)) {
+            return response()->json(['message' => 'The id must be numeric'], 400);
+        }
+
+        $product = Product::with(['category:id,name', 'images:product_id,image_url'])->find($id);
+
+        if(!$product){
+            return response()->json(['message' => 'Product not found'], 404);
+        }
+
+        return response()->json( new ProductResource($product), 200);
     }
 
     
