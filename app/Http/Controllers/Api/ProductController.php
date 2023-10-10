@@ -5,17 +5,20 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\IndexProductRequest;
 use App\Http\Requests\Api\StoreProductRequest;
+use App\Http\Requests\Api\UpdateProductRequest;
 use App\Http\Resources\CategoryResource;
 use App\Http\Resources\IndexProductCollection;
 use App\Http\Resources\ProductCollection;
 use App\Http\Resources\ProductPaginatedCollection;
 use App\Http\Resources\ProductResource;
 use App\Http\Resources\StoreProductResource;
+use App\Http\Resources\UpdatedProductResource;
 use App\Models\Category;
 use App\Models\Image;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Product;
+use App\Traits\ImageTrait;
 use Faker\Core\Number;
 use Illuminate\Database\Eloquent\Casts\Json;
 use Illuminate\Support\Arr;
@@ -26,9 +29,11 @@ use function PHPUnit\Framework\isEmpty;
 use function PHPUnit\Framework\isNull;
 use Illuminate\Support\Facades\DB;
 use Ramsey\Uuid\Type\Integer;
+use Illuminate\Support\Facades\File;
 
 class ProductController extends Controller
 {
+    use ImageTrait;
     
     public function index(IndexProductRequest $request)
     {
@@ -40,10 +45,6 @@ class ProductController extends Controller
 
         $priceMax = $request->query('price_max');
 
-        $pagination = $request->query('pagination', false);
-
-        $perPage = $request->query('per_page', 10);
-
         $productsQuery = Product::query()
             ->when($name, function ($query, $name) { $query->where('name', 'LIKE', '%' . $name . '%'); })
             ->when($categoryId, function ($query, $categoryId) { $query->where('category_id', $categoryId); })
@@ -51,16 +52,10 @@ class ProductController extends Controller
             ->when($priceMax, function ($query, $priceMax) { $query->where('price', '<=', $priceMax); })
             ->with(['category:id,name', 'images:product_id,image_url']);
 
-        if($pagination)
-        {
-            $products = $productsQuery->paginate($perPage);
+        
+        $products = $productsQuery->paginate(10);
 
-            return response()->json( new ProductPaginatedCollection($products), 200);
-        }
-
-        $products = $productsQuery->get();
-
-        return response()->json( new ProductCollection($products), 200);   
+        return response()->json( new ProductPaginatedCollection($products), 200);    
         
     }
 
@@ -78,79 +73,53 @@ class ProductController extends Controller
 
         $imageUrls = [];
 
-        if($request->hasFile('imageFiles')) { $imageUrls[] = $this->storeImageFiles($request->file('imageFiles'), $product); }
-
-        if($request->has('imageUrls')) { $imageUrls[] = $this->storeImageUrls($request->imageUrls, $product); }
+        $imageUrls[] = $request->imageUrls; 
+        
+        if($request->hasFile('imageFiles')) { $imageUrls[] = $this->uploadImageFiles($request->file('imageFiles')); }
 
         $imageUrls = Arr::collapse($imageUrls);
+
+        Image::insert($this->getImagesWithId($imageUrls, $product->id));
 
         $product->imageUrls = $imageUrls;
 
         return response()->json( new StoreProductResource($product), 201);
     }
 
-    private function storeImageFiles(array $imageFiles, Product $product): array
-    {
-
-        $uploadedImageUrls = [];
-
-        foreach($imageFiles as $image)
-        {
-            $imagePath = $image->store('uploads/products', 'public');
-
-            $imageUrl = asset('storage/' . $imagePath);
-
-            //$product->images()->create(['image_url' => $imageUrl]);
-
-            $uploadedImageUrls[] = $imageUrl;
-
-            $imageData[] = ['image_url' => $imageUrl, 'product_id' => $product->id];
-        }
-
-        Image::insert($imageData);
-
-        return $uploadedImageUrls;
-
-    }
-
-    private function storeImageUrls(array $imageUrls, Product $product): array
-    {
-        $urls = [];
-
-        foreach($imageUrls as $imageUrl)
-        {
-            //$product->images()->create(['image_url' => $imageUrl]);
-
-            $urls[] = $imageUrl;
-
-            $imageData[] = ['image_url' => $imageUrl, 'product_id' => $product->id];
-        }
-
-        Image::insert($imageData);
-
-        return $urls;
-    }
 
     public function show(string $id)
     {
-
-        if (!is_numeric($id)) {
-            return response()->json(['message' => 'The id must be numeric'], 400);
-        }
+        if (!is_numeric($id)) { return response()->json(['message' => 'The id must be numeric'], 400); }
 
         $product = Product::with(['category:id,name', 'images:product_id,image_url'])->find($id);
 
-        if(!$product){
-            return response()->json(['message' => 'Product not found'], 404);
-        }
+        if(!$product){ return response()->json(['message' => 'Product not found'], 404); }
 
         return response()->json( new ProductResource($product), 200);
     }
 
-    
-    public function update(Request $request, string $id)
+
+    public function update(UpdateProductRequest $request, string $id)
     {
-        //
+        if (!is_numeric($id)) { return response()->json(['message' => 'The id must be numeric'], 400); }
+
+        $product = Product::with('images:product_id,image_url')->find($id);
+
+        if(!$product){ return response()->json(['message' => 'Product not found'], 404); }
+        
+        if($request->has('name')){ $product->name =  $request->name; }
+        if($request->has('category_id')){ $product->category_id = $request->category_id; }
+        if($request->has('price')){ $product->price = $request->price; }
+        if($request->has('description')){ $product->description = $request->description; }
+        
+        $product->save();
+
+        $request->has('imageUrls') 
+            ? $product->images = $request->imageUrls 
+            : $product->images = $product->images->pluck('image_url');
+
+        return response()->json( new UpdatedProductResource($product), 200);
+
     }
 
     /**
