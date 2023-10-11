@@ -114,6 +114,7 @@ class ProductController extends Controller
         
         $product->save();
 
+
         $request->has('imageUrls') 
             ? $product->images = $request->imageUrls 
             : $product->images = $product->images->pluck('image_url');
@@ -127,6 +128,17 @@ class ProductController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $productExists = Product::where('id', $id)->exists();
+
+        if (!is_numeric($id)) { return response()->json(['message' => 'The id must be numeric'], 400); }
+        if (!$productExists) { return response()->json(['message' => 'Product not found'], 404); }
+
+        Product::destroy($id);
+        
+        return response()->json([
+            'message' => 'Product deleted',
+            'product_id' => $id
+        ], 200);
+
     }
 }
