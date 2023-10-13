@@ -63,4 +63,20 @@ class UserController extends Controller
 
         return response()->json( new UserResource($user), 200);
     }
+
+    public function destroy(string $id)
+    {
+        if (!is_numeric($id)) { return response()->json(['message' => 'The id must be numeric'], 400); }
+
+        $userExists = User::where('id', $id)->exists();
+        if (!$userExists) { return response()->json(['message' => 'User not found'], 404); }
+
+        User::destroy($id);
+        
+        return response()->json([
+            'message' => 'User deleted',
+            'user_id' => $id
+        ], 200);
+
+    }
 }
