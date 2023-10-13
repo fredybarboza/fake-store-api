@@ -52,4 +52,15 @@ class UserController extends Controller
 
         return response()->json( new UserResource($user), 200);
     }
+
+    public function show(string $id)
+    {
+        if (!is_numeric($id)) { return response()->json(['message' => 'The id must be numeric'], 400); }
+
+        $user = User::find($id);
+
+        if(!$user){ return response()->json(['message' => 'User not found'], 404); }
+
+        return response()->json( new UserResource($user), 200);
+    }
 }
