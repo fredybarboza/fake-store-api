@@ -2,12 +2,17 @@
 
 namespace App\Traits;
 
-use App\Models\Product;
 use Illuminate\Support\Facades\File;
 
 trait ImageTrait {
 
-    public function uploadImageFiles(array $imageFiles)
+    /**
+     * Store images in the file system.
+     *
+     * @param  array  $imageFiles
+     * @return array  An array of image URLs after being uploaded. 
+     */
+    public function storeImageFiles(array $imageFiles)
     {
         $uploadedImageUrls = [];
 
@@ -23,6 +28,13 @@ trait ImageTrait {
         return $uploadedImageUrls;
     }
 
+    /**
+     * Generate an array of image URLs with associated product IDs.
+     *
+     * @param  array  $imageUrls
+     * @param  int  $productId
+     * @return array
+     */
     public function getImagesWithId($imageUrls, $productId)
     {
         $imagesWithId = [];
@@ -35,7 +47,13 @@ trait ImageTrait {
         return $imagesWithId;
     }
 
-    public function removeImageFiles($imageUrls)
+    /**
+     * Delete images from the file system based on their URLs.
+     *
+     * @param  array  $imageUrls
+     * @return void
+     */
+    public function deleteImageFiles($imageUrls)
     {
         foreach($imageUrls as $url)
         {

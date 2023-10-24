@@ -3,11 +3,9 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-use Illuminate\Http\Response;
 use Throwable;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Illuminate\Database\QueryException;
 
 
 class Handler extends ExceptionHandler
@@ -37,12 +35,13 @@ class Handler extends ExceptionHandler
             }
 
             if ($exception instanceof MethodNotAllowedHttpException) {
-            return response()->json([
-                'message' => 'Method not allowed for this route',
-            ], 405);
-        }
+                return response()->json([
+                    'message' => 'Method not allowed for this route',
+                ], 405);
+            }
 
-           //return response()->json(['message' => 'An error accurred'], 500); 
+            return response()->json(['message' => 'An error accurred'], 500); 
+
         });
     }
     

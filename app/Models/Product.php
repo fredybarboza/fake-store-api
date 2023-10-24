@@ -10,13 +10,30 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Product extends Model
 {
     use HasFactory;
-    protected $fillable = ['name', 'category_id', 'price', 'description'];
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'name', 
+        'category_id', 
+        'price', 
+        'description'
+    ];
+
+    /**
+     * Get product images.
+     */
     public function images(): HasMany
     {
         return $this->hasMany(Image::class);
     }
 
+    /**
+     * Get the product category.
+     */
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);

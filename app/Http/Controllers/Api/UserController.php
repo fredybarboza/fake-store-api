@@ -4,16 +4,18 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\StoreUserRequest;
-use App\Http\Requests\Api\UpdateProductRequest;
 use App\Http\Resources\StoreUserResource;
 use App\Http\Resources\UserCollection;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use App\Http\Requests\Api\UpdateUserRequest;
-use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+
+    /**
+     * Display a paginated listing of the resource.
+     */
     public function index()
     {
         $users = User::paginate(10);
@@ -21,6 +23,9 @@ class UserController extends Controller
         return response()->json( new UserCollection($users), 200);
     }
 
+    /**
+     * Store a new resource in storage.
+     */
     public function store(StoreUserRequest $request)
     {
         $user = new User;
@@ -35,6 +40,9 @@ class UserController extends Controller
         return response()->json( new StoreUserResource($user), 200);
     }
 
+    /**
+     * Update the specified resource in storage.
+     */
     public function update(UpdateUserRequest $request, string $id)
     {
         if (!is_numeric($id)) { return response()->json(['message' => 'The id must be numeric'], 400); }
@@ -53,6 +61,9 @@ class UserController extends Controller
         return response()->json( new UserResource($user), 200);
     }
 
+    /**
+     * Display the specified resource.
+     */
     public function show(string $id)
     {
         if (!is_numeric($id)) { return response()->json(['message' => 'The id must be numeric'], 400); }
@@ -64,6 +75,9 @@ class UserController extends Controller
         return response()->json( new UserResource($user), 200);
     }
 
+    /**
+     * Remove the specified resource from storage.
+     */
     public function destroy(string $id)
     {
         if (!is_numeric($id)) { return response()->json(['message' => 'The id must be numeric'], 400); }

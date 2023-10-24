@@ -6,11 +6,13 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
     
+    /**
+     * Authenticate a user and return an access token if successful.
+     */
     public function login(LoginRequest $request): JsonResponse
     {
         $credentials = $request->only('email', 'password');
@@ -29,6 +31,9 @@ class LoginController extends Controller
         ], 200);
     }
 
+    /**
+     * Refresh the access token for the authenticated user.
+     */
     public function refresh()
     {
         return response()->json([

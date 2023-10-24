@@ -6,35 +6,22 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\IndexProductRequest;
 use App\Http\Requests\Api\StoreProductRequest;
 use App\Http\Requests\Api\UpdateProductRequest;
-use App\Http\Resources\CategoryResource;
-use App\Http\Resources\IndexProductCollection;
-use App\Http\Resources\ProductCollection;
 use App\Http\Resources\ProductPaginatedCollection;
 use App\Http\Resources\ProductResource;
 use App\Http\Resources\StoreProductResource;
 use App\Http\Resources\UpdatedProductResource;
-use App\Models\Category;
 use App\Models\Image;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use App\Models\Product;
 use App\Traits\ImageTrait;
-use Faker\Core\Number;
-use Illuminate\Database\Eloquent\Casts\Json;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Validator;
-
-use function PHPUnit\Framework\isEmpty;
-use function PHPUnit\Framework\isNull;
-use Illuminate\Support\Facades\DB;
-use Ramsey\Uuid\Type\Integer;
-use Illuminate\Support\Facades\File;
 
 class ProductController extends Controller
 {
     use ImageTrait;
-    
+
+    /**
+     * Display a paginated list of products based on request parameters.
+     */ 
     public function index(IndexProductRequest $request)
     {
         $name = $request->query('name');
@@ -59,6 +46,9 @@ class ProductController extends Controller
         
     }
 
+    /**
+     * Store a new product based on the given request data.
+     */
     public function store(StoreProductRequest $request)
     {  
 
@@ -75,7 +65,7 @@ class ProductController extends Controller
 
         $imageUrls[] = $request->imageUrls; 
         
-        if($request->hasFile('imageFiles')) { $imageUrls[] = $this->uploadImageFiles($request->file('imageFiles')); }
+        if($request->hasFile('imageFiles')) { $imageUrls[] = $this->storeImageFiles($request->file('imageFiles')); }
 
         $imageUrls = Arr::collapse($imageUrls);
 
@@ -86,7 +76,9 @@ class ProductController extends Controller
         return response()->json( new StoreProductResource($product), 201);
     }
 
-
+    /**
+     * Display the specified resource.
+     */
     public function show(string $id)
     {
         if (!is_numeric($id)) { return response()->json(['message' => 'The id must be numeric'], 400); }
@@ -98,7 +90,9 @@ class ProductController extends Controller
         return response()->json( new ProductResource($product), 200);
     }
 
-
+    /**
+     * Update the specified resource in storage.
+     */
     public function update(UpdateProductRequest $request, string $id)
     {
         if (!is_numeric($id)) { return response()->json(['message' => 'The id must be numeric'], 400); }

@@ -33,6 +33,14 @@ class StoreUserRequest extends FormRequest
         ];
     }
 
+    /**
+     * Handle a failed validation attempt and throw a validation exception with errors.
+     *
+     * @param  \Illuminate\Contracts\Validation\Validator  $validator
+     * @return void
+     *
+     * @throws \Illuminate\Http\Exceptions\HttpResponseException
+     */
     protected function failedValidation(Validator $validator)
     {
         $errors = (new ValidationException($validator))->errors();

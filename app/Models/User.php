@@ -64,6 +64,12 @@ class User extends Authenticatable implements JWTSubject
         return [];
     }
 
+    /**
+     * Sets the unencrypted value to the 'password' attribute.
+     *
+     * @param  string  $password
+     * @return void
+     */
     public function setPasswordAttribute($password)
     {
         $this->attributes['password'] = $password;
