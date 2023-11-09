@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" />
+
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+
+    *,
+    ::after,
+    ::before {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Poppins", sans-serif;
+      margin: 0;
+    }
+
+    h3 {
+      font-size: 1.2375rem;
+    }
+
+    a {
+      cursor: pointer;
+      text-decoration: none;
+      font-family: "Poppins", sans-serif;
+    }
+
+    li {
+      list-style: none;
+    }
+
+    /* Layout skeleton */
+
+    .wrapper {
+      align-items: stretch;
+      display: flex;
+      width: 100%;
+    }
+
+    #sidebar {
+      max-width: 264px;
+      min-width: 264px;
+      transition: all 0.35s ease-in-out;
+      z-index: 1111;
+    }
+
+    /* Sidebar collapse */
+
+    #sidebar.collapsed {
+      margin-left: -264px;
+    }
+
+    .main {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      width: 100%;
+      overflow: hidden;
+      transition: all 0.35s ease-in-out;
+    }
+
+    .sidebar-logo {
+      padding: 1.15rem 1.5rem;
+    }
+
+    .sidebar-nav {
+      padding: 0;
+    }
+
+    .sidebar-header {
+      padding: 1.5rem 1.5rem 0.375rem;
+    }
+
+    a.sidebar-link {
+      padding: 0.625rem 1.625rem;
+      color: black;
+      position: relative;
+      display: block;
+      font-size: 1rem;
+    }
+
+    .sidebar-link[data-bs-toggle="collapse"]::after {
+      border: solid;
+      border-width: 0 0.075rem 0.075rem 0;
+      content: "";
+      display: inline-block;
+      padding: 2px;
+      position: absolute;
+      right: 1.5rem;
+      top: 1.4rem;
+      transform: rotate(-135deg);
+      transition: all 0.2s ease-out;
+    }
+
+    .sidebar-link[data-bs-toggle="collapse"].collapsed::after {
+      transform: rotate(45deg);
+      transition: all 0.2s ease-out;
+    }
+
+    .content {
+      flex: 1;
+      max-width: 100vw;
+      width: 100vw;
+    }
+
+    .code-block {
+      color: #fff;
+      border-radius: 10px;
+      font-family: "Courier New", monospace;
+      overflow: auto;
+    }
+
+    /* Responsive */
+
+    @media (min-width: 768px) {
+      .content {
+        width: auto;
+      }
+    }
+  </style>
+  <title>Sidebar With Bootstrap</title>
+</head>
+
+<body>
+
+  <div class="wrapper">
+
+    <!-- Sidebar -->
+    <aside id="sidebar" class="border-end">
+
+      <div class="h-100">
+
+        <div class="sidebar-logo">
+
+          <a href="" class="navbar-brand mb-0 fs-3" style="direction: rtl; font-family: sans-serif;">
+            FakeStore<strong>{API}</strong>
+          </a>
+
+        </div>
+
+        <!-- Sidebar Navigation -->
+        <ul class="sidebar-nav">
+
+          <li class="sidebar-item">
+
+            <a href="#products" class="sidebar-link collapsed" data-bs-toggle="collapse" data-bs-target="#pages" aria-expanded="false" aria-controls="pages">
+              Products
+            </a>
+
+            <ul id="pages" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+
+              <li class="sidebar-item">
+                <a href="#" class="sidebar-link">Analytics</a>
+              </li>
+
+              <li class="sidebar-item">
+                <a href="#" class="sidebar-link">Ecommerce</a>
+              </li>
+
+              <li class="sidebar-item">
+                <a href="#" class="sidebar-link">Crypto</a>
+              </li>
+
+            </ul>
+          </li>
+
+          <li class="sidebar-item">
+
+            <a href="#" class="sidebar-link collapsed" data-bs-toggle="collapse" data-bs-target="#dashboard" aria-expanded="false" aria-controls="dashboard">
+              Dashboard
+            </a>
+
+            <ul id="dashboard" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+
+              <li class="sidebar-item">
+                <a href="#" class="sidebar-link">Dashboard Analytics</a>
+              </li>
+
+              <li class="sidebar-item">
+                <a href="#" class="sidebar-link">Dashboard Ecommerce</a>
+              </li>
+
+            </ul>
+          </li>
+
+          <li class="sidebar-item">
+
+            <a href="#" class="sidebar-link collapsed" data-bs-toggle="collapse" data-bs-target="#auth" aria-expanded="false" aria-controls="auth">
+              Auth
+            </a>
+            <ul id="auth" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+              <li class="sidebar-item">
+                <a href="#" class="sidebar-link">Login</a>
+              </li>
+              <li class="sidebar-item">
+                <a href="#" class="sidebar-link">Register</a>
+              </li>
+            </ul>
+          </li>
+          <li class="sidebar-header">Multi Level Nav</li>
+          <li class="sidebar-item">
+            <a href="#" class="sidebar-link collapsed" data-bs-toggle="collapse" data-bs-target="#multi" aria-expanded="false" aria-controls="multi">
+              <i class="fa-solid fa-share-nodes pe-2"></i>
+              Multi Level
+            </a>
+            <ul id="multi" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+              <li class="sidebar-item">
+                <a href="#" class="sidebar-link collapsed" data-bs-toggle="collapse" data-bs-target="#multi-two" aria-expanded="false" aria-controls="multi-two">
+                  Two Links
+                </a>
+                <ul id="multi-two" class="sidebar-dropdown list-unstyled collapse">
+                  <li class="sidebar-item">
+                    <a href="#" class="sidebar-link">Link 1</a>
+                  </li>
+                  <li class="sidebar-item">
+                    <a href="#" class="sidebar-link">Link 2</a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </aside>
+
+    <!-- Main Component -->
+    <div class="main">
+      <nav class="navbar navbar-expand px-3 border-bottom">
+
+        <!-- Button for sidebar toggle -->
+        <button class="btn" type="button" data-bs-theme="light">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Features</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Pricing</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+          </li>
+        </ul>
+
+      </nav>
+
+      <main class="content px-3 py-2">
+
+        <div class="container-fluid">
+
+          <div class="mb-3 col-lg-9">
+
+            <h2 class="fw-bold pt-2 mt-3 mb-4"># Introduction</h3>
+
+            <p>
+            This fake store API can be used in any project that requires data from products, categories, users or authentication services. You can use this API to make e-commerce prototypes, tests, sample codes, to learn, or whatever you decide to create!
+            </p>
+            
+            @include('docs.v1.parts.products')
+          </div>
+        </div>
+      </main>
+
+    </div>
+  </div>
+
+  <!-- SCRIPTS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+  <script src="script.js"></script>
+  <script>
+    const toggler = document.querySelector(".btn");
+    toggler.addEventListener("click", function() {
+      document.querySelector("#sidebar").classList.toggle("collapsed");
+    });
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script>
+    hljs.highlightAll();
+  </script>
+
+</body>
+
+</html>

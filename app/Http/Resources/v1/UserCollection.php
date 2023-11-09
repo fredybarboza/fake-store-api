@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\v1;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
@@ -19,7 +19,7 @@ class UserCollection extends ResourceCollection
             'total_pages' => $this->lastPage(),
             'users_per_page' => $this->perPage(),
             'total_users' => $this->total(),
-            'data' => $this->collection
+            'data' => $this->collection,
         ];
     }
 }

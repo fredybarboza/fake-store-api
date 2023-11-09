@@ -65,7 +65,7 @@ class User extends Authenticatable implements JWTSubject
     }
 
     /**
-     * Sets the unencrypted value to the 'password' attribute.
+     * Set the unencrypted value to the 'password' attribute.
      *
      * @param  string  $password
      * @return void

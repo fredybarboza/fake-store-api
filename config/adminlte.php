@@ -292,14 +292,14 @@ return [
     'menu' => [
         // Sidebar items:
         [
-            'text'    => 'Products',
-            'icon'    => 'fas fa-fw fa-box',
+            'text' => 'Products',
+            'icon' => 'fas fa-fw fa-box',
             'submenu' => [
                 [
                     'text' => 'Create new',
                     'icon' => false,
-                    'classes' => 'pl-4', 
-                    'route'  => 'admin.products.create',
+                    'classes' => 'pl-4',
+                    'route' => 'admin.products.create',
                 ],
             ],
         ],

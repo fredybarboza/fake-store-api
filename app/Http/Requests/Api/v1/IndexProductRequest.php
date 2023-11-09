@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Requests\Api;
+namespace App\Http\Requests\Api\v1;
 
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
-use Illuminate\Validation\ValidationException;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Validation\ValidationException;
 
 class IndexProductRequest extends FormRequest
 {
@@ -30,14 +30,13 @@ class IndexProductRequest extends FormRequest
             'category_id' => 'nullable|numeric|integer|min:0',
             'price_min' => 'numeric',
             'price_max' => 'numeric',
-            'per_page' => 'numeric|integer|min:1|max:20'
+            'per_page' => 'numeric|integer|min:1|max:20',
         ];
     }
 
     /**
      * Handle a failed validation attempt and throw a validation exception with errors.
      *
-     * @param  \Illuminate\Contracts\Validation\Validator  $validator
      * @return void
      *
      * @throws \Illuminate\Http\Exceptions\HttpResponseException

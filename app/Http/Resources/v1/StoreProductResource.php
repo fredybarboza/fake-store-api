@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\v1;
 
-use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -21,7 +20,7 @@ class StoreProductResource extends JsonResource
             'price' => $this->price,
             'description' => $this->when($this->description !== null, $this->description),
             'category' => $this->category()->select(['id', 'name'])->first(),
-            'images' => $this->when($this->imageUrls !== [], $this->imageUrls)
+            'images' => $this->when($this->imageUrls !== [], $this->imageUrls),
         ];
     }
 }

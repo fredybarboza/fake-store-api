@@ -1,13 +1,12 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\v1;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class ProductPaginatedCollection extends ResourceCollection
 {
-
     /**
      * The resource that this resource collects.
      *
@@ -27,7 +26,7 @@ class ProductPaginatedCollection extends ResourceCollection
             'total_pages' => $this->lastPage(),
             'products_per_page' => $this->perPage(),
             'total_products' => $this->total(),
-            'data' => $this->collection
+            'data' => $this->collection,
         ];
     }
 }

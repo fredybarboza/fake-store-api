@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Http\Requests\Api;
+namespace App\Http\Requests\Api\v1\Auth;
 
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
-use Illuminate\Validation\ValidationException;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Validation\ValidationException;
 
-class StoreProductRequest extends FormRequest
+class LoginRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -16,14 +16,6 @@ class StoreProductRequest extends FormRequest
     public function authorize(): bool
     {
         return true;
-    }
-
-    public function attributes(): array
-    {
-        return [
-            'imageFiles.*' => 'imageFiles[:index]',
-            'imageUrls.*' => 'imageUrls[:index]'
-        ];
     }
 
     /**
@@ -34,21 +26,14 @@ class StoreProductRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:255',
-            'imageFiles' => 'array|max:4',
-            'imageFiles.*' => 'image|mimes:jpeg,png,jpg',
-            'imageUrls' => 'array|max:4',
-            'imageUrls.*' => 'required|url',
-            'category_id' => 'required|exists:categories,id',
-            'price' => 'required|numeric',
-            'description' => 'string'
+            'email' => 'required|email',
+            'password' => 'required|string',
         ];
     }
 
     /**
      * Handle a failed validation attempt and throw a validation exception with errors.
      *
-     * @param  \Illuminate\Contracts\Validation\Validator  $validator
      * @return void
      *
      * @throws \Illuminate\Http\Exceptions\HttpResponseException
@@ -62,7 +47,5 @@ class StoreProductRequest extends FormRequest
                 'errors' => $errors,
             ], JsonResponse::HTTP_UNPROCESSABLE_ENTITY)
         );
-
     }
-
 }

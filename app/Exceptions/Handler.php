@@ -3,10 +3,9 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-use Throwable;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-
+use Throwable;
 
 class Handler extends ExceptionHandler
 {
@@ -40,9 +39,8 @@ class Handler extends ExceptionHandler
                 ], 405);
             }
 
-            return response()->json(['message' => 'An error accurred'], 500); 
+            //return response()->json(['message' => 'An error accurred'], 500);
 
         });
     }
-    
 }

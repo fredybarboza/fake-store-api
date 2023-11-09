@@ -1,13 +1,12 @@
 <?php
 
-namespace App\Http\Requests\Api;
+namespace App\Http\Requests\Api\v1;
 
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
-use Illuminate\Validation\ValidationException;
 use Illuminate\Http\JsonResponse;
-
+use Illuminate\Validation\ValidationException;
 
 class UpdateUserRequest extends FormRequest
 {
@@ -30,14 +29,13 @@ class UpdateUserRequest extends FormRequest
             'name' => 'sometimes|required|string|max:255',
             'email' => 'sometimes|required|email',
             'password' => 'sometimes|required|string',
-            'avatar' => 'sometimes|required|url'
+            'avatar' => 'sometimes|required|url',
         ];
     }
 
     /**
      * Handle a failed validation attempt and throw a validation exception with errors.
      *
-     * @param  \Illuminate\Contracts\Validation\Validator  $validator
      * @return void
      *
      * @throws \Illuminate\Http\Exceptions\HttpResponseException
@@ -46,10 +44,10 @@ class UpdateUserRequest extends FormRequest
     {
         $errors = (new ValidationException($validator))->errors();
 
-       throw new HttpResponseException(
-        response()->json([
-            'errors' => $errors,
-        ], JsonResponse::HTTP_UNPROCESSABLE_ENTITY)
+        throw new HttpResponseException(
+            response()->json([
+                'errors' => $errors,
+            ], JsonResponse::HTTP_UNPROCESSABLE_ENTITY)
         );
 
     }

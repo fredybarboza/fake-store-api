@@ -4,23 +4,21 @@ namespace App\Traits;
 
 use Illuminate\Support\Facades\File;
 
-trait ImageTrait {
-
+trait ImageTrait
+{
     /**
      * Store images in the file system.
      *
-     * @param  array  $imageFiles
-     * @return array  An array of image URLs after being uploaded. 
+     * @return array  An array of image URLs after being uploaded.
      */
     public function storeImageFiles(array $imageFiles)
     {
         $uploadedImageUrls = [];
 
-        foreach($imageFiles as $image)
-        {
+        foreach ($imageFiles as $image) {
             $imagePath = $image->store('uploads/products', 'public');
 
-            $imageUrl = asset('storage/' . $imagePath);
+            $imageUrl = asset('storage/'.$imagePath);
 
             $uploadedImageUrls[] = $imageUrl;
         }
@@ -39,8 +37,7 @@ trait ImageTrait {
     {
         $imagesWithId = [];
 
-        foreach($imageUrls as $url)
-        {
+        foreach ($imageUrls as $url) {
             $imagesWithId[] = ['image_url' => $url, 'product_id' => $productId];
         }
 
@@ -55,14 +52,14 @@ trait ImageTrait {
      */
     public function deleteImageFiles($imageUrls)
     {
-        foreach($imageUrls as $url)
-        {
+        foreach ($imageUrls as $url) {
             $path = parse_url($url, PHP_URL_PATH);
 
             $path = ltrim($path, '/');
 
-            if (File::exists($path)) { File::delete($path); }
+            if (File::exists($path)) {
+                File::delete($path);
+            }
         }
     }
-
 }
