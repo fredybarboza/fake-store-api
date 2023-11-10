@@ -7,6 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" />
 
   <style>
@@ -151,22 +152,66 @@
 
           <li class="sidebar-item">
 
-            <a href="#products" class="sidebar-link collapsed" data-bs-toggle="collapse" data-bs-target="#pages" aria-expanded="false" aria-controls="pages">
+            <a href="#" class="sidebar-link fw-bold collapsed" data-bs-toggle="collapse" data-bs-target="#dashboard" aria-expanded="false" aria-controls="dashboard">
+              Introduction
+            </a>
+
+            <ul id="dashboard" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+
+              <li class="sidebar-item">
+                <a href="#pagination" class="sidebar-link">Pagination</a>
+              </li>
+
+            </ul>
+          </li>
+
+          <li class="sidebar-item">
+
+            <a href="#products" class="sidebar-link fw-bold collapsed" data-bs-toggle="collapse" data-bs-target="#pages" aria-expanded="false" aria-controls="pages">
               Products
             </a>
 
             <ul id="pages" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
 
               <li class="sidebar-item">
-                <a href="#" class="sidebar-link">Analytics</a>
+                <a href="#get-all-products" class="sidebar-link">Get all products</a>
               </li>
 
               <li class="sidebar-item">
-                <a href="#" class="sidebar-link">Ecommerce</a>
+                <a href="#get-a-single-product" class="sidebar-link">Get a single product</a>
               </li>
 
               <li class="sidebar-item">
-                <a href="#" class="sidebar-link">Crypto</a>
+                <a href="#create-a-product" class="sidebar-link">Create a product</a>
+              </li>
+
+              <li class="sidebar-item">
+                <a href="#update-a-product" class="sidebar-link">Update a product</a>
+              </li>
+
+              <li class="sidebar-item">
+                <a href="#delete-a-product" class="sidebar-link">Delete a product</a>
+              </li>
+
+
+              <li class="sidebar-item">
+                <a href="#filter-products" class="sidebar-link collapsed fw-bold" data-bs-toggle="collapse" data-bs-target="#multi-two" aria-expanded="false" aria-controls="multi-two">
+                  Filter products
+                </a>
+                <ul id="multi-two" class="sidebar-dropdown list-unstyled collapse">
+                  <li class="sidebar-item">
+                    <a href="#filter-product-by-name" class="sidebar-link">Filter by name</a>
+                  </li>
+                  <li class="sidebar-item">
+                    <a href="#filter-product-by-price" class="sidebar-link">Filter by price</a>
+                  </li>
+                  <li class="sidebar-item">
+                    <a href="#filter-product-by-category" class="sidebar-link">Filter by category</a>
+                  </li>
+                  <li class="sidebar-item">
+                    <a href="#join-filters" class="sidebar-link">Join filters</a>
+                  </li>
+                </ul>
               </li>
 
             </ul>
@@ -191,24 +236,10 @@
             </ul>
           </li>
 
-          <li class="sidebar-item">
 
-            <a href="#" class="sidebar-link collapsed" data-bs-toggle="collapse" data-bs-target="#auth" aria-expanded="false" aria-controls="auth">
-              Auth
-            </a>
-            <ul id="auth" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
-              <li class="sidebar-item">
-                <a href="#" class="sidebar-link">Login</a>
-              </li>
-              <li class="sidebar-item">
-                <a href="#" class="sidebar-link">Register</a>
-              </li>
-            </ul>
-          </li>
-          <li class="sidebar-header">Multi Level Nav</li>
+
           <li class="sidebar-item">
             <a href="#" class="sidebar-link collapsed" data-bs-toggle="collapse" data-bs-target="#multi" aria-expanded="false" aria-controls="multi">
-              <i class="fa-solid fa-share-nodes pe-2"></i>
               Multi Level
             </a>
             <ul id="multi" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
@@ -227,6 +258,7 @@
               </li>
             </ul>
           </li>
+
         </ul>
       </div>
     </aside>
@@ -263,13 +295,24 @@
 
           <div class="mb-3 col-lg-9">
 
-            <h2 class="fw-bold pt-2 mt-3 mb-4"># Introduction</h3>
+            <h2 class="fw-bold pt-2 mt-3">Introduction</h3>
 
-            <p>
-            This fake store API can be used in any project that requires data from products, categories, users or authentication services. You can use this API to make e-commerce prototypes, tests, sample codes, to learn, or whatever you decide to create!
-            </p>
-            
-            @include('docs.v1.parts.products')
+              <p class="pt-4">
+                This fake store API can be used in any project that requires data from products, categories, users or authentication services. You can use this API to make e-commerce prototypes, tests, sample codes, to learn, or whatever you decide to create!
+              </p>
+
+              @include('docs.v1.parts.pagination')
+
+              <h2 id="products" class="fw-bold mt-5">Products</h2>
+
+              @include('docs.v1.parts.products.products')
+              @include('docs.v1.parts.products.single-product')
+              @include('docs.v1.parts.products.create-product')
+              @include('docs.v1.parts.products.update-product')
+              @include('docs.v1.parts.products.delete-product')
+              @include('docs.v1.parts.products.filter-products')
+
+
           </div>
         </div>
       </main>
