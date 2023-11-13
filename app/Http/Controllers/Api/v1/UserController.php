@@ -32,7 +32,6 @@ class UserController extends Controller
         $user->name = $request->name;
         $user->email = $request->email;
         $user->password = $request->password;
-        $user->avatar = $request->avatar;
 
         $user->save();
 
@@ -62,9 +61,6 @@ class UserController extends Controller
         }
         if ($request->has('password')) {
             $user->password = $request->password;
-        }
-        if ($request->has('avatar')) {
-            $user->avatar = $request->avatar;
         }
 
         $user->save();

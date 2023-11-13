@@ -3,7 +3,7 @@
 <p>
     The API will automatically paginate the responses. You will receive up to 10 documents per page.
 </p>
-<p class="fw-bold">information about the response:</p>
+<p class="fw-bold">Information about the response:</p>
 
 <table class="table">
     <thead>

@@ -152,11 +152,11 @@
 
           <li class="sidebar-item">
 
-            <a href="#" class="sidebar-link fw-bold collapsed" data-bs-toggle="collapse" data-bs-target="#dashboard" aria-expanded="false" aria-controls="dashboard">
+            <a href="#" class="sidebar-link fw-bold collapsed" data-bs-toggle="collapse" data-bs-target="#introduction" aria-expanded="false" aria-controls="introduction">
               Introduction
             </a>
 
-            <ul id="dashboard" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+            <ul id="introduction" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
 
               <li class="sidebar-item">
                 <a href="#pagination" class="sidebar-link">Pagination</a>
@@ -219,43 +219,47 @@
 
           <li class="sidebar-item">
 
-            <a href="#" class="sidebar-link collapsed" data-bs-toggle="collapse" data-bs-target="#dashboard" aria-expanded="false" aria-controls="dashboard">
-              Dashboard
+            <a href="#" class="sidebar-link collapsed fw-bold" data-bs-toggle="collapse" data-bs-target="#users" aria-expanded="false" aria-controls="users">
+              Users
             </a>
 
-            <ul id="dashboard" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+            <ul id="users" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
 
               <li class="sidebar-item">
-                <a href="#" class="sidebar-link">Dashboard Analytics</a>
+                <a href="#get-all-users" class="sidebar-link">Get all users</a>
               </li>
 
               <li class="sidebar-item">
-                <a href="#" class="sidebar-link">Dashboard Ecommerce</a>
+                <a href="#get-a-single-user" class="sidebar-link">Get a single user</a>
+              </li>
+
+              <li class="sidebar-item">
+                <a href="#create-a-user" class="sidebar-link">Create a user</a>
+              </li>
+
+              <li class="sidebar-item">
+                <a href="#update-a-user" class="sidebar-link">Update a user</a>
+              </li>
+
+              <li class="sidebar-item">
+                <a href="#delete-a-user" class="sidebar-link">Delete a user</a>
               </li>
 
             </ul>
           </li>
 
-
-
           <li class="sidebar-item">
-            <a href="#" class="sidebar-link collapsed" data-bs-toggle="collapse" data-bs-target="#multi" aria-expanded="false" aria-controls="multi">
-              Multi Level
+
+            <a href="#" class="sidebar-link collapsed fw-bold" data-bs-toggle="collapse" data-bs-target="#categories" aria-expanded="false" aria-controls="categories">
+              Categories
             </a>
-            <ul id="multi" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+
+            <ul id="categories" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+
               <li class="sidebar-item">
-                <a href="#" class="sidebar-link collapsed" data-bs-toggle="collapse" data-bs-target="#multi-two" aria-expanded="false" aria-controls="multi-two">
-                  Two Links
-                </a>
-                <ul id="multi-two" class="sidebar-dropdown list-unstyled collapse">
-                  <li class="sidebar-item">
-                    <a href="#" class="sidebar-link">Link 1</a>
-                  </li>
-                  <li class="sidebar-item">
-                    <a href="#" class="sidebar-link">Link 2</a>
-                  </li>
-                </ul>
+                <a href="#get-all-categories" class="sidebar-link">Get all categories</a>
               </li>
+
             </ul>
           </li>
 
@@ -311,6 +315,18 @@
               @include('docs.v1.parts.products.update-product')
               @include('docs.v1.parts.products.delete-product')
               @include('docs.v1.parts.products.filter-products')
+
+              <h2 id="products" class="fw-bold mt-5">Users</h2>
+
+              @include('docs.v1.parts.users.all-users')
+              @include('docs.v1.parts.users.single-user')
+              @include('docs.v1.parts.users.create-user')
+              @include('docs.v1.parts.users.update-user')
+              @include('docs.v1.parts.users.delete-user')
+
+              <h2 id="products" class="fw-bold mt-5">Categories</h2>
+
+              @include('docs.v1.parts.categories.categories')
 
 
           </div>

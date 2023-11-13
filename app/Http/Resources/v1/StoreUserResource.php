@@ -18,7 +18,6 @@ class StoreUserResource extends JsonResource
             'id' => $this->id ?? 27,
             'name' => $this->name,
             'email' => $this->email,
-            'avatar' => $this->avatar,
             'password' => $this->password,
         ];
     }
