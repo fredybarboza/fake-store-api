@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\v1\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\v1\Auth\LoginRequest;
+use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 
@@ -14,29 +15,25 @@ class LoginController extends Controller
      */
     public function login(LoginRequest $request): JsonResponse
     {
-        $credentials = $request->only('email', 'password');
 
-        $token = Auth::attempt($credentials);
+        $email = $request->input('email');
+        $password = $request->input('password');
 
-        if (! $token) {
+        $user = User::where('email', $email)->first();
+
+        if ($user && $user->password === $password) {
+
+            $token = Auth::login($user);
+
             return response()->json([
-                'status' => 'error',
-                'message' => 'Unauthorized',
-            ], 401);
+                'access_token' => $token,
+            ], 200);
         }
 
         return response()->json([
-            'access_token' => $token,
-        ], 200);
+            'status' => 'error',
+            'message' => 'Unauthorized',
+        ], 401);
     }
 
-    /**
-     * Refresh the access token for the authenticated user.
-     */
-    public function refresh()
-    {
-        return response()->json([
-            'new_access_token' => Auth::refresh(),
-        ], 200);
-    }
 }

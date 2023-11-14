@@ -14,11 +14,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('v1')->group(function () {
     
-    Route::post('login', [LoginController::class, 'login']);
-
-    Route::middleware('auth:api')->group(function () {
-        Route::post('refresh', [LoginController::class, 'refresh']);
-    });
+    Route::post('/auth/login', [LoginController::class, 'login']);
 
     Route::post('/products', [ProductController::class, 'store']);
     Route::get('/products', [ProductController::class, 'index']);

@@ -9,6 +9,7 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" />
+  <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/ico">
 
   <style>
     @import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
@@ -127,7 +128,7 @@
       }
     }
   </style>
-  <title>Sidebar With Bootstrap</title>
+  <title>Documentation &bull; Fake Store Api</title>
 </head>
 
 <body>
@@ -141,7 +142,7 @@
 
         <div class="sidebar-logo">
 
-          <a href="" class="navbar-brand mb-0 fs-3" style="direction: rtl; font-family: sans-serif;">
+          <a href="/" class="navbar-brand mb-0 fs-3" style="direction: rtl; font-family: sans-serif;">
             FakeStore<strong>{API}</strong>
           </a>
 
@@ -263,6 +264,21 @@
             </ul>
           </li>
 
+          <li class="sidebar-item">
+
+            <a href="#" class="sidebar-link collapsed fw-bold" data-bs-toggle="collapse" data-bs-target="#authenticate" aria-expanded="false" aria-controls="authenticate">
+              JWT Auth
+            </a>
+
+            <ul id="authenticate" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+
+              <li class="sidebar-item">
+                <a href="#authentication" class="sidebar-link">Authentication</a>
+              </li>
+
+            </ul>
+          </li>
+
         </ul>
       </div>
     </aside>
@@ -272,22 +288,16 @@
       <nav class="navbar navbar-expand px-3 border-bottom">
 
         <!-- Button for sidebar toggle -->
-        <button class="btn" type="button" data-bs-theme="light">
+        <button class="btn" type="button">
           <span class="navbar-toggler-icon"></span>
         </button>
 
-        <ul class="navbar-nav">
+        <ul class="navbar-nav ms-auto">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Home</a>
+            <a class="nav-link" aria-current="page" href="/">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Features</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Pricing</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+            <a class="nav-link" aria-current="page" href="https://github.com/fredybarboza/fake-store-api">GitHub</a>
           </li>
         </ul>
 
@@ -327,6 +337,10 @@
               <h2 id="products" class="fw-bold mt-5">Categories</h2>
 
               @include('docs.v1.parts.categories.categories')
+
+              <h2 id="products" class="fw-bold mt-5">Authentication</h2>
+
+              @include('docs.v1.parts.auth.login')
 
 
           </div>
