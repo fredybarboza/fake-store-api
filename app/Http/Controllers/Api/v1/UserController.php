@@ -35,7 +35,7 @@ class UserController extends Controller
 
         $user->save();
 
-        return response()->json(new StoreUserResource($user), 200);
+        return response()->json(new StoreUserResource($user), 201);
     }
 
     /**

@@ -5,12 +5,8 @@ namespace Tests\Feature\Controllers;
 use App\Models\Category;
 use App\Models\Image;
 use App\Models\Product;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\File;
 use Tests\TestCase;
 
 
